@@ -1,0 +1,68 @@
+---
+version: 3
+
+vars:
+  COMPOSE: "docker compose -f compose.yaml -f compose.{{ .APP_ENV }}.yaml"
+  PHP: "docker compose exec php"
+tasks:
+  build:
+    desc: build docker image
+    cmds:
+      - "{{ .COMPOSE }} build"
+  up:
+    desc: bring up container
+    cmd: "{{.COMPOSE}} up -d"
+
+  rm:
+    desc: remove containers
+    cmds: 
+      - task: stop
+      - "{{.COMPOSE}} rm --force"
+
+  start:
+    desc: start docker containers
+    cmd: "{{.COMPOSE}} start"
+
+  stop:
+    desc: stop docker containers
+    cmd: "{{.COMPOSE}} stop"
+
+  recreate:
+    desc: recreate docker containers
+    cmds:
+      - task: rm
+      - task: up
+
+  logs:
+    desc: display container logs
+    cmds:
+      - "{{.COMPOSE}} logs -f"
+
+  composer:
+    desc: run composer
+    cmd: "{{.PHP}} composer {{.cmd}} {{.CLI_ARGS}}"
+
+  php:req:
+    desc: run composer req
+    cmds:
+      - task: composer
+        vars:
+          cmd: require --dev {{.package}}
+
+  php:rm:
+    desc: remove composer package
+    cmds:
+      - task: composer
+        vars:
+          cmd: rm --dev {{.package}}
+
+  sf:
+    desc: run symfony command
+    cmd: "{{.PHP}} /app/bin/console {{.cmd}} {{.CLI_ARGS}}"
+
+  sf:cc:
+    desc: clear symfony caches
+    cmds:
+      - task: sf
+        vars:
+          cmd: cache:clear
