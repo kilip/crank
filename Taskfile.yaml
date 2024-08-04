@@ -42,12 +42,19 @@ tasks:
     desc: run composer
     cmd: "{{.PHP}} composer {{.cmd}} {{.CLI_ARGS}}"
 
-  php:req:
+  php:req-dev:
     desc: run composer req
     cmds:
       - task: composer
         vars:
           cmd: require --dev {{.package}}
+
+  php:req:
+    desc: run composer req
+    cmds:
+      - task: composer
+        vars:
+          cmd: require {{.package}}
 
   php:rm:
     desc: remove composer package
@@ -66,3 +73,27 @@ tasks:
       - task: sf
         vars:
           cmd: cache:clear
+
+  phpunit:
+    desc: runs phpunit test
+    cmds:
+      - "{{ .PHP }} ./vendor/bin/phpunit {{.CLI_ARGS}}"
+  
+  phpstan:
+    desc: runs phpstan
+    cmds:
+      - "{{ .PHP }} ./vendor/bin/phpstan analyse {{.CLI_ARGS}}"
+  
+  csf:
+    desc: runs php-cs-fixer
+    cmds:
+      - "cs fix"
+    dir: "./api"
+
+  wip:
+    desc: Push into wip branch
+    cmds:
+      - task: csf
+      - git add . -A && git commit -am "{{.msg}}" && git push origin main
+    vars:
+      msg: "wip"

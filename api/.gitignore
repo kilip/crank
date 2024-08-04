@@ -1,3 +1,5 @@
+.php-cs-fixer.cache
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -6,4 +8,15 @@
 /public/bundles/
 /var/
 /vendor/
+/build/
 ###< symfony/framework-bundle ###
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+.phpunit.cache
+###< phpunit/phpunit ###

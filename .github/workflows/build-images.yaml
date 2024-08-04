@@ -11,7 +11,7 @@
         name: Build Container Images
         runs-on: ubuntu-latest
         env:
-          PHP_DOCKER_IMAGE: ghcr.io/kilip/purus-php:${{ github.sha }}
+          PHP_DOCKER_IMAGE: ghcr.io/kilip/crank-php:${{ github.sha }}
           PREFIX: ghcr.io/kilip/crank
         permissions:
           packages: "write"
@@ -32,7 +32,7 @@
           
           - name: Get current date
             id: date
-            run: echo "::set-output name=date::$(date +'%Y%m%d%H%M%S')"
+            run: echo "date=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
     
           - name: Build Docker images
             uses: docker/bake-action@v4
@@ -53,14 +53,11 @@
             run: |
               docker push $PHP_DOCKER_IMAGE
     
-          - name: Docker tag and push latest
+          - name: Docker tag and push branch
             if: github.event_name != 'pull_request'
             run: |
               docker tag $PHP_DOCKER_IMAGE ${PREFIX}-php:${{ github.ref_name }}
-              docker tag $PHP_DOCKER_IMAGE ${PREFIX}-php:latest
-    
               docker push ${PREFIX}-php:${{ github.ref_name }}
-              docker push ${PREFIX}-php:latest
     
-              docker tag $PHP_DOCKER_IMAGE ${PREFIX}-php:${{ github.ref_name }}-${{ github.sha }}-${{ steps.date.outputs.date }}
-              docker push ${PREFIX}-php:${{ github.ref_name }}-${{ github.sha }}-${{ steps.date.outputs.date }}
+              docker tag $PHP_DOCKER_IMAGE ${PREFIX}-php:${{ github.ref_name }}-${{ steps.date.outputs.date }}
+              docker push ${PREFIX}-php:${{ github.ref_name }}-${{ steps.date.outputs.date }}
