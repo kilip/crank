@@ -13,7 +13,8 @@
         "api",
         "ci",
         "deps",
-        "docker-image"
+        "docker-image",
+        "github-action"
       ]
     ],
     "scope-empty": [
