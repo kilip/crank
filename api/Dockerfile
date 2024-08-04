@@ -13,6 +13,10 @@ FROM ghcr.io/kilip/frankenphp-api:1.2.2-php8.3@sha256:77b3fad1c64d3e012daec848cc
 
 WORKDIR /app
 
+COPY --link frankenphp/conf.d/app.ini $PHP_INI_DIR/conf.d/
+COPY --link --chmod=755 frankenphp/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY --link frankenphp/Caddyfile /etc/caddy/Caddyfile
+
 # Dev FrankenPHP image
 FROM frankenphp_base AS frankenphp_dev
 

@@ -1,6 +1,7 @@
 # Production environment override
 services:
   php:
+    container_name: crank-php-prod
     image: ${PHP_DOCKER_IMAGE}
     build:
       context: ./api

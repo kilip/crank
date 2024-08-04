@@ -9,6 +9,10 @@ tasks:
     desc: build docker image
     cmds:
       - "{{ .COMPOSE }} build"
+  
+  pull:
+    desc: pull production container
+    cmd: "{{.COMPOSE}} pull"
   up:
     desc: bring up container
     cmd: "{{.COMPOSE}} up -d"

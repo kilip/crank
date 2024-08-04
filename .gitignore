@@ -1,3 +1,4 @@
 vars/*
 !vars/.gitkeep
-./.env
+.env
+!api/.env
