@@ -11,6 +11,7 @@ FROM ghcr.io/kilip/frankenphp-api:1.2.2-php8.3 AS frankenphp_base
 # https://docs.docker.com/develop/develop-images/multistage-build/#stop-at-a-specific-build-stage
 # https://docs.docker.com/compose/compose-file/#target
 
+WORKDIR /app
 
 # Dev FrankenPHP image
 FROM frankenphp_base AS frankenphp_dev

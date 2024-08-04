@@ -9,10 +9,14 @@
  * file that was distributed with this source code.
  */
 
-use Crank\Kernel;
+namespace Crank\Tests;
 
-require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+use PHPUnit\Framework\TestCase;
 
-return function (array $context) {
-    return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
-};
+class AcmeTest extends TestCase
+{
+    public function testShouldAssertTrue(): void
+    {
+        $this->assertTrue(true);
+    }
+}
