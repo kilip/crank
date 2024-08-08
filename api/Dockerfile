@@ -4,7 +4,7 @@
 
 
 # Versions
-FROM ghcr.io/kilip/frankenphp-api:1.2.2-php8.3@sha256:77b3fad1c64d3e012daec848cc71f94e9d693496d63569c3052848af592bfbc1 AS frankenphp_base
+FROM ghcr.io/kilip/frankenphp-api:1.2.3-php8.3@sha256:0af42eefc28330019e48950e552a74e1fb686a2fd433a27a4638198095c55c6b AS frankenphp_base
 
 
 # The different stages of this Dockerfile are meant to be built into separate images
